@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instrumentos | Note</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ICONO DE USUARIO */
+    .usuario-box {
+      margin-left: auto;
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .usuario-icono {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 3px solid #d4af37; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+      background-color: #111;
+      color: white;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    header h1 {
+      cursor: pointer;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- SI NO ESTÁ LOGUEADO → MANDAR A PÚBLICO -->
+<script>
+if (localStorage.getItem("logueado") !== "1") {
+    window.location.href = "../publico/index.html";
+}
+</script>
+
+<header>
+    <!-- NOMBRE CLICKABLE -->
+    <h1 onclick="window.location.href='index.html'">🎵 Note</h1>
+
+    <!-- ICONO DEL USUARIO -->
+    <div class="usuario-box" onclick="window.location.href='perfil.html'">
+      <div class="usuario-icono">👤</div>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="instrumentos.html" class="active">Instrumentos</a></li>
+      </ul>
+    </nav>
+</header>
+
+<main class="contenido">
+    <h2>Conoce tus instrumentos</h2>
+    <p>Descubre cómo cuidar y afinar tus instrumentos favoritos.</p>
+
+    <div class="cards">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/727/727240.png" alt="Piano">
+        <h3>Piano</h3>
+        <p>Tipos de pianos, limpieza, afinación y mantenimiento.</p>
+        <button onclick="window.location.href='Principiante.html'">Ver piano </button>
+      </div>
+
+     
+      </div>
+    </div>
+</main>
+
+<footer>
+  <p>© 2025 Note | Aprende con pasión 🎸</p>
+</footer>
+
+
+<script>
+const logueado = localStorage.getItem("logueado");
+
+if (logueado === "1") {
+    const itemInicio = document.querySelector("nav ul li:first-child");
+    if (itemInicio) itemInicio.style.display = "none";
+}
+</script>
+
+</body>
+</html>

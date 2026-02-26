@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Note | Nivel Principiante</title>
+
+
+</head>
+<head>
+  <style>
+    body { margin:0; font-family:Arial,sans-serif; background:#0a0a0a; color:white; }
+    header { width:100%; padding:20px 0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); position:fixed; top:0; left:0; z-index:10; display:flex; justify-content:center;}
+    nav { display:flex; align-items:center; gap:50px; }
+    .logo { font-size:28px; font-weight:bold; color:#facc15; display:flex; align-items:center; gap:10px; }
+    .logo span { font-size:30px; }
+    nav a { text-decoration:none; color:#f5f5f5; font-size:18px; transition:0.3s; }
+    nav a:hover { color:#facc15; }
+
+    .container { padding-top:150px; max-width:1000px; margin:auto; text-align:center; }
+    h1 { font-size:36px; color:#facc15; margin-bottom:10px; }
+    .sub { color:#d1d1d1; font-size:18px; margin-bottom:40px; }
+    .card { background:#111; border:1px solid #2b2b2b; padding:25px; border-radius:15px; box-shadow:0 0 15px rgba(255,215,0,0.15); margin-bottom:30px; }
+    .card h2 { color:#facc15; margin-bottom:15px; }
+    .steps { text-align:left; max-width:305px; margin:20px auto; line-height:1.6; color:#e5e5e5; }
+    footer { margin-top:50px; text-align:center; padding:20px; color:#777; }
+
+    /* TECLADO */
+    .piano-wrap { margin:20px auto 60px; max-width:900px; background: linear-gradient #0f0f0f; padding:20px; border-radius:12px; border:1px solid #222; border-bottom: 3px solid #d4af37;}
+    .piano { position:relative; height:200px; display:flex; justify-content:center; }
+    
+    .key {
+      width:calc(100% / 14);
+      height:200px;
+      background:white;
+      border:1px solid #ccc;
+      position:relative;
+      z-index:1;
+      display:flex;
+      justify-content:center;
+      align-items:flex-end;
+      padding-bottom:8px;
+      font-weight:bold;
+      transition:0.1s;
+    }
+    
+    .black {
+      width:calc(100% / 22);
+      height:130px;
+      background:#111;
+      position:absolute;
+      z-index:2;
+      border-radius:4px;
+      color:#fff;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding-bottom:8px;
+      font-weight:bold;
+      transform:translateX(-50%);
+      transition:0.1s;
+    }
+
+    .key.active, .black.active {
+      background:#facc15 !important;
+      color:#0a0a0a;
+      transform:translateY(4px) scale(0.97);
+      box-shadow:0 0 20px rgba(250,204,21,0.6);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+    <!--NOMBRE CLICKABLE-->
+    <h1 onclick="window.location.href='Cursos.html'"> Note</h1>
+
+    <!-- ICONO DEL USUARIO -->
+    <div class="usuario-box" onclick="window.location.href='perfil.html'">
+      <div class="usuario-icono">👤</div>
+    </div>
+
+ 
+</header>
+
+<div class="container">
+  <h1>Curso de Piano - Principiante</h1>
+  <p class="sub">¡Vamos a darle! </p>
+
+  <div class="piano-wrap card">
+    <h2>Teclado Virtual </h2>
+    <p class="steps">          Puedes usar mouse, teclado físico o MIDI.</p>
+    <div class="piano" id="piano"></div>
+  </div>
+
+  <footer>© 2025 Note | Aprende con pasión 🎶</footer>
+</div>
+
+<h2 id="nota-detectada" style="color:#facc15; margin-top:20px; text-align:center;">Toca una nota…</h2>
+
+<script>
+  const notaToName = {60:'DO',61:'DO',62:'RE',63:'RE',64:'MI',65:'FA',66:'FA',67:'SOL',68:'SOL',69:'LA',70:'LA',71:'SI',72:'DO',73:'DO',74:'RE',75:'RE',76:'MI',77:'FA',78:'FA',79:'SOL',80:'SOL',81:'LA',82:'LA',83:'SI'};
+
+  // AUDIO
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  function midiToFreq(m){ return 440 * Math.pow(2,(m-69)/12); }
+  function playPiano(midi){
+
+
+    //con esto genera el sonido en piano simple|
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
+
+    osc.type='triangle';
+    filter.type='lowpass';
+    filter.frequency.value=3000;
+
+    osc.frequency.value=midiToFreq(midi);
+    gain.gain.setValueAtTime(0,audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.4,audioCtx.currentTime+0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+1);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+
+
+    //filtro y volumen, y se apaga, Cada nota dura 1.1 segundos
+    osc.start();
+    osc.stop(audioCtx.currentTime+1.1);
+  }
+
+  // GENERAR TECLADO
+  const piano = document.getElementById('piano');
+  const whiteNotes = [];
+  const blackNotes = [];
+
+  const blackSet = [1,3,6,8,10];
+
+  for(let midi = 60; midi <= 83; midi++){
+    const note = midi % 12;
+    const isBlack = blackSet.includes(note);
+
+    if(!isBlack){
+      whiteNotes.push(midi);
+    } else {
+      blackNotes.push(midi);
+    }
+  }
+
+  // Crear teclas blancas
+  whiteNotes.forEach(midi=>{
+    const k=document.createElement('div');
+    k.classList.add('key');
+    k.dataset.midi=midi;
+    k.innerHTML='<span>'+notaToName[midi]+'</span>';
+    piano.appendChild(k);
+  });
+
+  // Crear teclas negras en posiciones correctas
+  const whiteKeys = piano.querySelectorAll('.key');
+  let blackIndex = 0;
+
+  whiteKeys.forEach((w,i)=>{
+    const nextMidi = whiteNotes[i] + 1;
+    const note = nextMidi % 12;
+
+    if(blackSet.includes(note) && blackIndex < blackNotes.length){
+      const b=document.createElement('div');
+      b.classList.add('black');
+      b.dataset.midi = blackNotes[blackIndex];
+      b.innerHTML='<span>'+notaToName[blackNotes[blackIndex]]+'</span>';
+      b.style.left = ((i + 1) * (100 / 14)) + "%";
+      piano.appendChild(b);
+      blackIndex++;
+    }
+  });
+
+  // INTERACCIÓN
+  function highlight(midi){
+    const el = piano.querySelector(`[data-midi="${midi}"]`);
+    if(!el) return;
+    el.classList.add('active');
+    setTimeout(()=>el.classList.remove('active'),200);
+  }
+
+
+  //Toca el sonido:Ilumina la tecla, Muestra el nombre de la nota
+  function trigger(midi){
+    playPiano(midi);
+    highlight(midi);
+    document.getElementById('nota-detectada').textContent='Has tocado: '+notaToName[midi]+' 🎵';
+  }
+
+  piano.addEventListener('mousedown',e=>{
+    if(e.target.dataset.midi) trigger(parseInt(e.target.dataset.midi));
+  });
+
+  // TECLADO FÍSICO
+  const keyMap={'a':60,'w':61,'s':62,'e':63,'d':64,'f':65,'t':66,'g':67,'y':68,'h':69,'u':70,'j':71,'k':72,'o':73,'l':74};
+  window.addEventListener('keydown',e=>{
+    if(keyMap[e.key]) trigger(keyMap[e.key]);
+  });
+
+  // MIDI
+
+
+  //Primero vemos si el navegador soporta MIDI:
+  if(navigator.requestMIDIAccess){
+
+
+    //Si sí, pedimos acceso:
+    navigator.requestMIDIAccess().then(access=>{
+
+      //Después escuchamos cualquier teclado MIDI conectado:
+      for(let input of access.inputs.values()){
+        input.onmidimessage = msg=>{
+
+          //Cada tecla MIDI manda 3 datos:
+          //por ejemplo Ejemplo real 144 tecla presionada (NOTE ON), 60 MIDI 60 (DO), 100 velocidad/golpe
+
+          const [cmd,note,vel] = msg.data;
+
+          //Luego filtramos solo cuando suenan notas:
+          if(cmd===144 && vel>0) trigger(note);
+        };
+
+        //Si presionas una tecla en tu teclado MIDI,
+         //manda la nota → ejecuta trigger() → suena → se ilumina NO necesita drivers. NO necesita instalar nada. Solo conectar y tocar.
+
+
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
+
+
+
+  <style>
+    /* ICONO DE USUARIO */
+    .usuario-box {
+      margin-left: auto;
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .usuario-icono {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 3px solid #d4af37; /* aro dorado */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+      background-color: #111;
+      color: white;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    header h1 {
+      cursor: pointer;
+      margin: 0;
+    }
+  </style> 
+
+
+
+<script>
+navigator.requestMIDIAccess().then(midi => {
+  console.log("Entradas MIDI:", midi.inputs.size);
+});
+</script>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Note | Nivel Principiante</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0a0a0a;
+      color: white;
+    }
+
+    /* NAVBAR */
+    header {
+      width: 100%;
+      padding: 20px 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #facc15;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo span {
+      font-size: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #f5f5f5;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #facc15;
+    }
+
+    /* SECCIÓN PRINCIPIANTE */
+    .container {
+      padding-top: 150px;
+      max-width: 1000px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #facc15;
+      margin-bottom: 10px;
+    }
+
+    .sub {
+      color: #d1d1d1;
+      font-size: 18px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: #111111;
+      border: 1px solid #2b2b2b;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+      margin-bottom: 30px;
+    }
+
+    .card h2 {
+      color: #facc15;
+      margin-bottom: 15px;
+    }
+
+    .finger-diagram {
+      width: 260px;
+      height: 260px;
+      border-radius: 15px;
+      background: radial-gradient(circle, #333 0%, #111 80%);
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #facc15;
+      font-size: 22px;
+      border: 1px solid #444;
+    }
+
+    .steps {
+      text-align: left;
+      max-width: 600px;
+      margin: 20px auto;
+      line-height: 1.6;
+      color: #e5e5e5;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      padding: 20px;
+      color: #777;
+    }
+
+    /* TECLADO VIRTUAL */
+    .piano-wrap {
+      margin: 20px auto 60px;
+      max-width: 900px;
+      background: linear-gradient(180deg,#0f0f0f,#080808);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #222;
+    }
+
+    .piano {
+      user-select: none;
+      position: relative;
+      height: 160px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 0;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 820px;
+    }
+
+    .key {
+      width: calc(100% / 14);
+      height: 160px;
+      background: white;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      position: relative;
+      z-index: 1;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding-bottom:8px;
+      color:#111;
+      font-weight:bold;
+    }
+
+    .key.active {
+      background: #facc15;
+      color:#0a0a0a;
+      box-shadow: 0 6px 18px rgba(250,204,21,0.25) inset;
+    }
+
+    .black {
+      width: calc(100% / 21);
+      height: 100px;
+      background: #111;
+      position: absolute;
+      z-index: 2;
+      margin-left: -calc((100% / 21) / 2);
+      border-radius: 4px;
+      color: #fff;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding-bottom:8px;
+      font-weight:bold;
+    }
+
+    .black.active {
+      background: #facc15;
+      color:#0a0a0a;
+      box-shadow: 0 6px 18px rgba(250,204,21,0.25) inset;
+    }
+
+    /* etiquetas */
+    .key span, .black span{
+      font-size:12px;
+      opacity:0.9;
+    }
+
+    /* Responsive */
+    @media (max-width:600px){
+      .piano {height:120px}
+      .key{height:120px}
+      .black{height:75px}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">
+        <span>🎵</span> Note
+      </div>
+      <a href="#">Inicio</a>
+      <a href="#">Cursos</a>
+      <a href="#">Instrumentos</a>
+      <a href="#">Contacto</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Bienvenido al Curso de Piano - Nivel Principiante</h1>
+    <p class="sub">¡Qué bueno tenerte aquí! Empecemos con las primeras notas y la posición correcta de los dedos.</p>
+
+    <div class="card">
+      <h2>Introducción: Tus primeras 3 notas</h2>
+      <div class="steps">
+        <p><strong>🎹 Nota DO:</strong> Es la primera nota que aprenderás. Se encuentra justo antes del grupo de dos teclas negras.</p>
+        <p><strong>🎹 Nota RE:</strong> La tecla blanca que está entre las dos teclas negras.</p>
+        <p><strong>🎹 Nota MI:</strong> La tecla blanca que está después del grupo de dos teclas negras.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Posición de los dedos</h2>
+      <div class="finger-diagram">Posición Inicial</div>
+
+      <div class="steps">
+        <p>✔ Coloca tu <strong>pulgar (dedo 1)</strong> en la nota DO.</p>
+        <p>✔ Coloca tu <strong>índice (dedo 2)</strong> en la nota RE.</p>
+        <p>✔ Coloca tu <strong>medio (dedo 3)</strong> en la nota MI.</p>
+        <p>✔ Mantén la mano relajada y curvada naturalmente.</p>
+      </div>
+    </div>
+
+    <!-- Teclado virtual -->
+    <div class="piano-wrap card">
+      <h2>Teclado virtual</h2>
+      <p class="steps">Haz clic en las teclas o toca en tu teclado MIDI: DO (60), RE (62), MI (64) están resaltadas como ejemplo.</p>
+
+      <div class="piano" id="piano"></div>
+    </div>
+
+    <!-- Ejercicios prácticos -->
+    <div class="card">
+      <h2>Ejercicios prácticos</h2>
+      <div class="steps">
+        <p><strong>Ejercicio 1 – Toca la secuencia DO → RE → MI</strong></p>
+        <p>Presiona las teclas en ese orden. El sistema te confirmará si lo hiciste bien.</p>
+        <p id="ej1-estado" style="color:#facc15; font-weight:bold; margin-top:10px;">Aún no inicias…</p>
+        <hr style="border:1px solid #333; margin:20px 0;">
+
+        <p><strong>Ejercicio 2 – Repite 3 veces la nota DO</strong></p>
+        <p>Ideal para fortalecer la precisión del dedo 1 (pulgar).</p>
+        <p id="ej2-estado" style="color:#facc15; font-weight:bold; margin-top:10px;">Aún no inicias…</p>
+      </div>
+    </div>
+
+    <!-- Tips y datos curiosos -->
+    <div class="card">
+      <h2>Tips y datos curiosos del piano 🎹✨</h2>
+      <div class="steps">
+        <p><strong>🎯 Tip 1:</strong> Mantén siempre la mano relajada. La tensión reduce velocidad y precisión.</p>
+        <p><strong>🎯 Tip 2:</strong> Practica lento primero. La velocidad llega sola con control.</p>
+        <p><strong>🎯 Tip 3:</strong> Escucha antes de tocar. Entrenar el oído es igual de importante que mover los dedos.</p>
+        <hr style="border:1px solid #333; margin:20px 0;">
+        <p><strong>🎹 Dato curioso 1:</strong> El piano moderno tiene 88 teclas, pero los primeros pianos solo tenían 49.</p>
+        <p><strong>🎹 Dato curioso 2:</strong> El piano fue inventado en 1700 por Bartolomeo Cristofori en Italia.</p>
+        <p><strong>🎹 Dato curioso 3:</strong> El instrumento más caro del mundo es un piano Steinway decorado con oro y piedras preciosas valuado en más de 1 millón de dólares.</p>
+      </div>
+    </div>
+
+    <!-- Botones navegación -->
+    <div style="margin:40px auto; text-align:center;">
+      <button id="btn-next" style="padding:12px 25px; font-size:18px; background:#facc15; border:none; border-radius:10px; cursor:pointer; margin-right:20px;">Siguiente parte ➜</button>
+      <button id="btn-exit" style="padding:12px 25px; font-size:18px; background:#b91c1c; color:white; border:none; border-radius:10px; cursor:pointer;">Salir ✖</button>
+    </div>
+
+  <footer>
+      © 2025 Note | Aprende con pasión 🎶
+    </footer>
+  </div>
+
+  <h2 id="nota-detectada" style="color:#facc15; margin-top:20px; text-align:center;">
+    Toca una nota en tu teclado MIDI…
+  </h2>
+
+  <script>
+    /* ---------- UTILIDADES MIDI & AUDIO ---------- */
+    const notaToName = {
+      60: 'DO', 61:'DO#', 62: 'RE',63:'RE#',64:'MI',65:'FA',66:'FA#',67:'SOL',68:'SOL#',69:'LA',70:'LA#',71:'SI'
+    };
+
+    // WebAudio para generar tonos simples
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function midiToFreq(m){
+      return 440 * Math.pow(2, (m - 69) / 12);
+    }
+
+    function playMidiNote(midi, duration = 0.6){
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = midiToFreq(midi);
+      gain.gain.setValueAtTime(0, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration + 0.02);
+    }
+
+    /* ---------- CREAR TECLAS DEL TECLADO ---------- */
+    const pianoEl = document.getElementById('piano');
+    // Construiremos desde C4 (midi 60) hasta B4 (71) -> 12 notas blancas/negra distribuidas
+    const whiteOrder = [60,62,64,65,67,69,71]; // DO RE MI FA SOL LA SI
+    const blackOrder = [61,63,null,66,68,70,null];
+
+    // Create white keys
+    whiteOrder.forEach((midi, i) => {
+      const key = document.createElement('div');
+      key.classList.add('key');
+      key.dataset.midi = midi;
+      key.innerHTML = '<span>' + (notaToName[midi] || midi) + '</span>';
+      key.addEventListener('mousedown', () => { triggerKey(midi); });
+      pianoEl.appendChild(key);
+    });
+
+    // Position black keys absolutely
+    const whiteKeys = pianoEl.querySelectorAll('.key');
+    whiteKeys.forEach((wkey, i) => {
+      const midiBlack = blackOrder[i];
+      if (midiBlack) {
+        const b = document.createElement('div');
+        b.classList.add('black');
+        b.style.left = calc(${(i + 0.5) * (100/7)}%);
+        b.dataset.midi = midiBlack;
+        b.innerHTML = '<span>' + (notaToName[midiBlack] || midiBlack) + '</span>';
+        b.addEventListener('mousedown', () => { triggerKey(midiBlack); });
+        pianoEl.appendChild(b);
+      }
+    });
+
+    function highlightKey(midi){
+      // busca key blanco o negro con ese midi
+      const el = pianoEl.querySelector('[data-midi="'+midi+'"]');
+      if(!el) return;
+      el.classList.add('active');
+      setTimeout(()=> el.classList.remove('active'), 300);
+    }
+
+    function triggerKey(midi){
+      playMidiNote(midi);
+      highlightKey(midi);
+      // Si es DO/RE/MI mostramos texto
+      if([60,62,64].includes(midi)){
+        document.getElementById('nota-detectada').textContent = 'Has tocado: ' + (notaToName[midi] || midi) + ' 🎵';
+      }
+    }
+
+    /* ---------- WEB MIDI INTEGRACIÓN ---------- */
+    if (navigator.requestMIDIAccess) {
+      navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+    } else {
+      console.warn("Tu navegador no soporta WebMIDI.");
+    }
+
+    function onMIDISuccess(midiAccess) {
+      for (let input of midiAccess.inputs.values()) {
+        input.onmidimessage = (msg) => {
+          const [cmd, note, vel] = msg.data;
+          // Nota ON
+          if (cmd === 144 && vel > 0) {
+            triggerKey(note);
+          }
+        };
+      }
+    }
+
+    function onMIDIFailure() {
+      console.log("No se pudo acceder al dispositivo MIDI.");
+    }
+
+    /* Soporte teclado físico del PC (opcional) */
+    const keyMap = {
+      // teclas del teclado QWERTY -> notas
+      'a':60, 'w':61, 's':62, 'e':63, 'd':64, 'f':65, 't':66, 'g':67, 'y':68, 'h':69, 'u':70, 'j':71
+    };
+
+    window.addEventListener('keydown', (e)=>{
+      if(e.repeat) return;
+      const midi = keyMap[e.key];
+      if(midi) triggerKey(midi);
+    });
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solfeo para Principiantes</title>
+  <style>
+    :root{--accent:#ffcc00;--card:#222;--bg1:#1a1a1a;--bg2:#3a3a3a}
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: linear-gradient(120deg, var(--bg1), var(--bg2));
+      color: #eef2f5;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing:antialiased;
+    }
+    header {
+      background: #0f0f0f;
+      padding: 22px 16px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      color:var(--accent);
+      border-bottom: 4px solid var(--accent);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    }
+    .container {
+      padding: 28px 18px;
+      max-width: 980px;
+      margin: 28px auto;
+    }
+    .card {
+      background: var(--card);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 14px;
+      border-left: 6px solid var(--accent);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    h2 { color: var(--accent); margin-top:0 }
+    p { color:#dfe6ea }
+    .row { display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap }
+    button, .btn {
+      padding: 10px 16px; background:var(--accent); color:#0a0a0a; border:none; border-radius:10px; cursor:pointer; font-weight:600;
+    }
+    .small { padding:8px 12px; font-size:14px }
+
+    /* Pentagrama interactivo */
+    .pentagrama {
+      width: 100%;
+      height: 140px;
+      background: linear-gradient(180deg,#0b0b0b,#131313);
+      border-radius: 10px;
+      margin-top: 15px;
+      position: relative;
+      border:1px solid rgba(255,255,255,0.03);
+      padding:16px;
+    }
+    /* Draw staff lines with pseudo-elements */
+    .pentagrama::before{
+      content:'';
+      position:absolute; left:12px; right:12px; top:20px; bottom:20px;
+      background-image: linear-gradient(#ffffff 1px, transparent 1px);
+      background-size: 100% calc((100% - 40px) / 4);
+      opacity:0.12;
+      pointer-events:none;
+    }
+
+    /* Note SVG containers */
+    .nota {
+      position:absolute; width:46px; height:46px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform .16s, filter .16s;
+    }
+    .nota:hover { transform:translateY(-6px); filter:brightness(1.2) }
+
+    /* legend */
+    .legend { display:flex; gap:12px; align-items:center; margin-top:12px; flex-wrap:wrap }
+    .legend .item{ display:flex; gap:8px; align-items:center; background:rgba(255,255,255,0.02); padding:8px 10px; border-radius:8px }
+
+    /* ejercicios */
+    .exercise { display:flex; gap:12px; align-items:center; margin-top:12px; flex-wrap:wrap }
+    .result { margin-top:12px; font-weight:700; color:var(--accent) }
+
+    /* responsive */
+    @media (max-width:640px){ .row{flex-direction:column} .pentagrama{height:120px} }
+  </style>
+</head>
+<body>
+  <header>Solfeo – Nivel Principiante</header>
+
+  <div class="container">
+
+    <div class="card">
+      <h2>¿Qué es el Pentagrama?</h2>
+      <p>El pentagrama es un conjunto de <b>cinco líneas y cuatro espacios</b>. En ellos se escriben las notas musicales.
+      Cada línea y espacio representa una altura diferente —es el "papel" donde se escribe la música—.</p>
+
+      <!-- Pentagrama interactivo con SVGs de notas -->
+      <div class="pentagrama" id="pentagrama">
+        <!-- SVGs de notas colocadas (Do, Re, Mi) -->
+        <!-- Do -->
+        <div class="nota" data-name="DO" style="left:70px; top:56px" title="Do (nota en línea)">
+          <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="20" cy="36" rx="10" ry="7" fill="#ffffff" stroke="#000" stroke-opacity="0.1" />
+            <rect x="28" y="10" width="4" height="40" fill="#ffffff" opacity="0.95"></rect>
+          </svg>
+        </div>
+
+        <!-- Re -->
+        <div class="nota" data-name="RE" style="left:150px; top:42px" title="Re (nota espacio)">
+          <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="20" cy="28" rx="10" ry="7" fill="#ffffff" stroke="#000" stroke-opacity="0.1" />
+            <rect x="28" y="4" width="4" height="40" fill="#ffffff" opacity="0.95"></rect>
+          </svg>
+        </div>
+
+        <!-- Mi -->
+        <div class="nota" data-name="MI" style="left:230px; top:30px" title="Mi (nota en línea)">
+          <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="20" cy="20" rx="10" ry="7" fill="#ffffff" stroke="#000" stroke-opacity="0.1" />
+            <rect x="28" y="-4" width="4" height="40" fill="#ffffff" opacity="0.95"></rect>
+          </svg>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="item"><svg width="20" height="20" viewBox="0 0 64 64"><ellipse cx="20" cy="36" rx="8" ry="6" fill="#fff"/></svg><div>Negra (1 tiempo)</div></div>
+        <div class="item"><svg width="20" height="20" viewBox="0 0 64 64"><ellipse cx="20" cy="36" rx="8" ry="6" fill="#fff" stroke="#fff" stroke-width="2" fill-opacity="0.12"/></svg><div>Blanca (2 tiempos)</div></div>
+        <div class="item"><svg width="20" height="20" viewBox="0 0 64 64"><ellipse cx="20" cy="36" rx="10" ry="8" fill="none" stroke="#fff" stroke-width="2"/></svg><div>Redonda (4 tiempos)</div></div>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <h2>¿Qué son Negra, Blanca y Redonda?</h2>
+      <div class="row">
+        <div style="flex:1; min-width:220px">
+          <p><b>Negra:</b> figura llena (cuerpo negro con plica). Dura <b>1 tiempo</b>. En el pentagrama se ve sólida.</p>
+          <p><b>Blanca:</b> cuerpo vacío con plica. Dura <b>2 tiempos</b> (el doble que la negra).</p>
+          <p><b>Redonda:</b> cuerpo vacío sin plica. Dura <b>4 tiempos</b> (cuatro negras).</p>
+        </div>
+        <div style="width:260px; text-align:center">
+          <!-- Mostrar ejemplo gráfico con SVGs -->
+          <svg viewBox="0 0 300 120" width="100%" height="120">
+            <!-- staff -->
+            <g stroke="#fff" stroke-opacity="0.12">
+              <line x1="10" x2="290" y1="30" y2="30" stroke-width="2"/>
+              <line x1="10" x2="290" y1="44" y2="44" stroke-width="2"/>
+              <line x1="10" x2="290" y1="58" y2="58" stroke-width="2"/>
+              <line x1="10" x2="290" y1="72" y2="72" stroke-width="2"/>
+              <line x1="10" x2="290" y1="86" y2="86" stroke-width="2"/>
+            </g>
+            <!-- Redonda -->
+            <ellipse cx="60" cy="60" rx="10" ry="8" fill="none" stroke="#fff" stroke-width="2"/>
+            <!-- Blanca -->
+            <ellipse cx="140" cy="60" rx="10" ry="7" fill="#fff" fill-opacity="0.08" stroke="#fff" stroke-width="1"/>
+            <rect x="150" y="30" width="3" height="30" fill="#fff" opacity="0.95"/>
+            <!-- Negra -->
+            <ellipse cx="220" cy="60" rx="8" ry="6" fill="#fff"/>
+            <rect x="230" y="30" width="3" height="30" fill="#fff"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Reproducir ejemplos sonoros y mini-quiz -->
+      <div style="margin-top:14px" class="row">
+        <div>
+          <div style="margin-bottom:8px"><button class="small" id="play-black">Reproducir Negra (1 t)</button></div>
+          <div style="margin-bottom:8px"><button class="small" id="play-white">Reproducir Blanca (2 t)</button></div>
+          <div style="margin-bottom:8px"><button class="small" id="play-whole">Reproducir Redonda (4 t)</button></div>
+        </div>
+
+        <div style="flex:1; min-width:220px">
+          <div style="font-weight:700; margin-bottom:8px">Mini-quiz: ¿Cuál dura 2 tiempos?</div>
+          <div class="exercise">
+            <button class="small" data-answer="negra">Negra</button>
+            <button class="small" data-answer="blanca">Blanca</button>
+            <button class="small" data-answer="redonda">Redonda</button>
+          </div>
+          <div id="quiz-result" class="result">Elige una opción para ver si es correcta.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <h2>Ejercicios interactivos</h2>
+      <p>Practica identificando y haciendo clic en las notas Do, Re y Mi dentro del pentagrama. También puedes presionar las teclas del piano virtual o tu teclado MIDI si estás conectado.</p>
+
+      <div style="margin-top:12px">
+        <button id="start-exercise" class="btn">Iniciar Ejercicio: DO → RE → MI</button>
+        <div id="exercise-status" class="result" style="color:#ffd580">Presiona iniciar para comenzar.</div>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <h2>Consejos rápidos</h2>
+      <p><b>Escucha atentamente</b>: Antes de tocar, escucha la nota. <br>
+      <b>Controla el tiempo</b>: practica con metrónomo lento al principio. <br>
+      <b>Relaja la mano</b>: evita tensión y adopta postura cómoda.</p>
+    </div>
+
+    <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:8px">
+      <button onclick="window.location.href='Cursos.html'">Volver al menú</button> 
+      <button onclick="alert('Guardado local')">Guardar progreso</button>
+    </div>
+
+  </div>
+
+  <script>
+    // WebAudio helpers
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const audio = new AudioCtx();
+    function playTone(frequency, duration = 1){
+      const o = audio.createOscillator();
+      const g = audio.createGain();
+      o.type = 'sine';
+      o.frequency.value = frequency;
+      g.gain.setValueAtTime(0, audio.currentTime);
+      g.gain.linearRampToValueAtTime(0.18, audio.currentTime+0.01);
+      g.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + duration);
+      o.connect(g); g.connect(audio.destination);
+      o.start(); o.stop(audio.currentTime+duration+0.02);
+    }
+    function midiToFreq(m){ return 440 * Math.pow(2, (m - 69) / 12); }
+
+    // Map notes to rough MIDI values for demo (C4=60)
+    const noteMap = { 'DO':60, 'RE':62, 'MI':64 };
+
+    // Click on interactive notes
+    document.querySelectorAll('.nota').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const name = el.dataset.name;
+        const midi = noteMap[name] || 60;
+        playTone(midiToFreq(midi), 0.6);
+        // flash
+        el.style.transform='scale(1.15)'; setTimeout(()=>el.style.transform='',160);
+      });
+    });
+
+    // Play duration examples
+    document.getElementById('play-black').addEventListener('click', ()=>{ playTone(midiToFreq(60), 0.6); });
+    document.getElementById('play-white').addEventListener('click', ()=>{ playTone(midiToFreq(60), 1.2); });
+    document.getElementById('play-whole').addEventListener('click', ()=>{ playTone(midiToFreq(60), 2.4); });
+
+    // Mini-quiz logic
+    document.querySelectorAll('.exercise button[data-answer]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const ans = b.dataset.answer;
+        const correct = ans === 'blanca';
+        const res = document.getElementById('quiz-result');
+        if(correct){ res.textContent = '¡Correcto! La blanca dura 2 tiempos.'; res.style.color='#a7ff7a'; }
+        else { res.textContent = 'No exactamente. Intenta de nuevo.'; res.style.color='#ffb3a7'; }
+      });
+    });
+
+    // Simple exercise DO->RE->MI detection
+    let exerciseActive = false;
+    let exerciseSeq = ['DO','RE','MI'];
+    let userSeq = [];
+    const statusEl = document.getElementById('exercise-status');
+    document.getElementById('start-exercise').addEventListener('click', ()=>{
+      exerciseActive = true; userSeq = []; statusEl.textContent = 'Ejercicio activo: toca DO → RE → MI en orden.'; statusEl.style.color='#ffd580';
+    });
+
+    function handlePlayedNote(name){
+      if(!exerciseActive) return;
+      userSeq.push(name);
+      // check prefix
+      const i = userSeq.length -1;
+      if(userSeq[i] !== exerciseSeq[i]){
+        statusEl.textContent = 'Secuencia incorrecta. Intenta de nuevo.'; statusEl.style.color='#ff9b9b'; exerciseActive=false; return;
+      }
+      if(userSeq.length === exerciseSeq.length){
+        statusEl.textContent = '¡Bien hecho! Secuencia completada ✅'; statusEl.style.color='#a7ff7a'; exerciseActive=false; return;
+      }
+      statusEl.textContent = 'Correcto hasta ahora... sigue.';
+    }
+
+    // connect clicks on note SVGs to exercise handler
+    document.querySelectorAll('.nota').forEach(n=> n.addEventListener('click', ()=>{
+      handlePlayedNote(n.dataset.name);
+    }));
+
+    // Optional: accept keyboard (QWERTY) for demo
+    const keyMap = {'a':'DO','s':'RE','d':'MI'};
+    window.addEventListener('keydown', (e)=>{
+      if(e.repeat) return;
+      const n = keyMap[e.key];
+      if(n){ playTone(midiToFreq(noteMap[n]),0.6); handlePlayedNote(n); }
+    });
+
+    // If user prefers sounds on mobile, resume context on first touch
+    document.body.addEventListener('touchstart', ()=>{ if(audio.state === 'suspended') audio.resume(); }, {once:true});
+  </script>
+</body>
+</html>

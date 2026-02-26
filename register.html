@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Cuenta</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<header>
+    <h1 style="cursor: pointer;" onclick="window.location.href='index.html'">🎵 Note</h1>
+</header>
+
+<section class="contenido">
+    <h2>Únete ahora</h2>
+    <p>Crea tu cuenta para comenzar a usar la plataforma</p>
+
+    <form onsubmit="return false;">
+        <input type="text" id="regNombre" placeholder="Nombre de usuario" required>
+        <input type="email" id="regCorreo" placeholder="Correo electrónico" required>
+        <input type="password" id="regPass" placeholder="Contraseña" required>
+
+        <button type="button" onclick="registrar()">Registrarme</button>
+
+        <button type="button" class="secundario" onclick="window.location.href='index.html'">
+            Ya tengo cuenta
+        </button>
+    </form>
+</section>
+
+<footer>
+    © 2025 Note. Todos los derechos reservados.
+</footer>
+
+<script>
+    const SUPABASE_URL = "https://lzhmxfxqekjuuicsqjqy.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_sS1U60DiT1e9V8aPO50zDQ_G8EhZX1L";
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function registrar() {
+        const email = document.getElementById('regCorreo').value;
+        const password = document.getElementById('regPass').value;
+
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+        });
+
+        if (error) {
+            alert("Error: " + error.message);
+        } else {
+            alert("¡Cuenta creada! Ahora inicia sesión.");
+            window.location.href = "index.html"; 
+        }
+    }
+</script>
+
+</body>
+</html>
