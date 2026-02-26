@@ -38,19 +38,30 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-    const supabase = supabase.createClient("https://lzhmxfxqekjuuicsqjqy.supabase.co", "sb_publishable_sS1U60DiT1e9V8aPO50zDQ_G8EhZX1L");
+    const { createClient } = supabase;
+    const _supabase = createClient(
+        "https://lzhmxfxqekjuuicsqjqy.supabase.co", 
+        "sb_publishable_sS1U60DiT1e9V8aPO50zDQ_G8EhZX1L"
+    );
 
     async function iniciarSesion() {
         const email = document.getElementById('loginCorreo').value;
         const password = document.getElementById('loginPass').value;
 
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await _supabase.auth.signInWithPassword({ 
+            email: email, 
+            password: password 
+        });
 
-        if (error) return alert("Error: " + error.message);
-        
-        localStorage.setItem("logueado", "1");
-        window.location.href = "cursos.html";
+        if (error) {
+            alert("Error: " + error.message);
+        } else {
+            localStorage.setItem("logueado", "1");
+            window.location.href = "cursos.html";
+        }
     }
 </script>
 
